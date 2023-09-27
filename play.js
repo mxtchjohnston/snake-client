@@ -23,6 +23,6 @@ const exit = () => process.exit();
 conn.on('data', data => {
   print(data);
   if (data === _.SERVER_EXIT) {
-    conn.close();
+    conn.end();
   }
 });
