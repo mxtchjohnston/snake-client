@@ -5,7 +5,7 @@ const { setupInput } = require('./input.js');
 
 console.log("Connecting ...");
 const conn = connect('localhost', 50541);
-const stdin = setupInput();
+const stdin = setupInput(conn);
 
 
 conn.on('connect', () =>{ 
