@@ -1,18 +1,24 @@
 const print = (data) => console.log(data);
 const { connect } = require('./client.js');
 const { setupInput } = require('./input.js');
-
+const _ = require('./constants');
 
 console.log("Connecting ...");
-const conn = connect('localhost', 50541);
+const conn = connect(_.IP, _.PORT);
 const stdin = setupInput(conn);
 
-
-conn.on('connect', () =>{ 
+const reConnect = () => { 
   console.log('connected to server');
-  conn.write('Name: MXJ');
-  // conn.write('Move: up');
-  // setInterval(() => conn.write('Move: up'), 100);
-});
+  conn.write(_.NAME);
+  setInterval(() => {
+    let rand = Math.floor(Math.random() * _.SAYS.length);
+    conn.write(`Say: ${_.SAYS[rand]}`);
+  },_.SAYS_INTERVAL);
+};
 
-conn.on('data', print);
+conn.on('connect', reConnect);
+
+
+conn.on('data', data => {
+  print(data);
+});

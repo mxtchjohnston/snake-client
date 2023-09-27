@@ -1,21 +1,14 @@
-const print = (data) => console.log(data);
-const movement = {
-  'w': 'Move: up',
-  's': 'Move: down',
-  'a': "Move: left",
-  'd': "Move: right" 
-};
-
-let connection;
+const _ = require('./constants');
+let currentDirection = _.MOVEMENT['a'];
 
 const handleUserInput = key => {
-  if (key === '\u0003') {
+  if (key === _.EXIT) {
     console.log("Disconnecting...")
     process.exit();
   }
 
-  const cmd = movement[key];
-  if (cmd) connection.write(cmd);
+  const cmd = _.MOVEMENT[key];
+  if (cmd) currentDirection = cmd;
 };
 
 const setupInput = function (conn) {
@@ -23,8 +16,8 @@ const setupInput = function (conn) {
   stdin.setRawMode(true);
   stdin.setEncoding("utf8");
   stdin.resume();
-  connection = conn
   stdin.on("data", handleUserInput);
+  setInterval(() => conn.write(currentDirection), _.SPEED);
   return stdin;
 };
 
