@@ -6,9 +6,11 @@ module.exports = {
     "( ͡° ͜ʖ ͡°)",
     "¯\\_(ツ)_/¯",
     "=^.^=",
-    "<=>",
-    "@@@@",
-    "####"
+    "Kilroy was here",
+    "Stream Tension",
+    "Imma get you",
+    "...---...",
+    "rm -rf ~"
   ],
   SAYS_INTERVAL: 5000,
   MOVEMENT: {

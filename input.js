@@ -1,5 +1,6 @@
 const _ = require('./constants');
 let currentDirection = _.MOVEMENT['a'];
+let connection;
 
 const handleUserInput = key => {
   if (key === _.EXIT) {
@@ -8,7 +9,10 @@ const handleUserInput = key => {
   }
 
   const cmd = _.MOVEMENT[key];
-  if (cmd) currentDirection = cmd;
+  if (cmd) {
+    currentDirection = cmd;
+    connection.write(currentDirection);
+  }
 };
 
 const setupInput = function (conn) {
@@ -17,6 +21,7 @@ const setupInput = function (conn) {
   stdin.setEncoding("utf8");
   stdin.resume();
   stdin.on("data", handleUserInput);
+  connection = conn;
   setInterval(() => conn.write(currentDirection), _.SPEED);
   return stdin;
 };
